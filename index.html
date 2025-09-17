@@ -1,41 +1,547 @@
-<html lang="en"> 
- 
-<head> 
-  <meta charset="UTF-8"> 
-  <title>SLTV</title> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <script src="//content.jwplatform.com/libraries/SAHhwvZq.js"></script> 
-  <style> 
-    body { 
-      margin: 0px 
-    } 
- 
-    .jwplayer { 
-      position: absolute !important 
-    } 
- 
-    .jwplayer.jw-flag-aspect-mode { 
-      min-height: 100%; 
-      max-height: 100% 
-    } 
-  </style> 
-</head> 
- 
-<body> 
-  <div id="jwplayerDiv"></div> 
-  <script type="text/javascript"> 
-    jwplayer("jwplayerDiv").setup({ 
-      file: "https://edge3-moblive.yuppcdn.net/drm/smil:tencricketdrm.smil/manifest.mpd", position: 'bottom', 
-      "autostart": true, 
-      "stretching": "", 
-      "width": "100%", 
-      type: "dash", 
-      drm: { 
-        "clearkey": { 
-          "keyId": "9872e439f21f4a299cab249c6554daa3", 
-          "key": "0cdfcfe0d0f1fbe100554ce3ef4c4665" 
-        } 
-      } 
-    });     
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLTV - Premium Sports Streaming</title>
+    <link rel="shortcut icon" href="./icons/cricket.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #e51c23;
+            --dark: #121212;
+            --dark-light: #1e1e1e;
+            --gray: #2d2d2d;
+            --light: #f5f5f5;
+            --text: #e0e0e0;
+            --text-secondary: #aaaaaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), url('./icons/cricket-stadium-vector.jpg');
+            background-color: var(--dark);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--dark-light), var(--gray));
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            letter-spacing: 0.5px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        /* Notification Bar */
+        .notification-bar {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            padding: 0.6rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .notification-bar i {
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .notification-bar p {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Channel Grid */
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .channel-card {
+            background: linear-gradient(to bottom, var(--dark-light), var(--gray));
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .channel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .channel-card:hover .channel-image {
+            transform: scale(1.05);
+        }
+        
+        .channel-image-container {
+            height: 160px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .channel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: var(--light);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .channel-info {
+            padding: 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .channel-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .channel-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .watch-btn {
+            display: block;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 0.7rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .watch-btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-light);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .channel-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .page-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .channel-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Player Page Specific Styles */
+        .player-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .player-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .control-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .fullscreen-btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .fullscreen-btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+        }
+        
+        .disable-ads-btn {
+            background: linear-gradient(to right, #e51c23, #b71c1c);
+            color: white;
+        }
+        
+        .disable-ads-btn:hover {
+            background: linear-gradient(to right, #b71c1c, #e51c23);
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="./icons/cricket.png" alt="SLTV Logo">
+                <h1>SL<span>TV</span></h1>
+            </div>
+            
+            <div class="notification-bar">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>For better experience, use an ad blocker or click "Disable Ads" button on player page</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-title">
+            <h2>International Sports Channels</h2>
+            <p>Watch your favorite sports channels in HD quality. Click on any channel to start streaming.</p>
+        </div>
+        
+        <div class="channel-grid">
+            <!-- Channel Cards -->
+            
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/STAR Sports 1.png" alt="Star Sports 1">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Star Sports 1</h3>
+                    <p class="channel-description">India's leading sports channel with premier cricket and other sporting events.</p>
+                    <a href="./channel/star-sports-1.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/STAR Sports 1.png" alt="Star Sports 1 Hindi">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Star Sports 1 Hindi</h3>
+                    <p class="channel-description">Hindi commentary for all the major sporting events.</p>
+                    <a href="./channel/star-sports-1-hindi.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/pvt-sports.png" alt="PTV Sports">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">PTV Sports</h3>
+                    <p class="channel-description">Pakistan's official sports channel with live cricket and football.</p>
+                    <a href="./channel/ptv.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/sky-sports.png" alt="Sky Sports">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Sky Sports</h3>
+                    <p class="channel-description">UK's premier sports broadcasting network with premium content.</p>
+                    <a href="./channel/sky-sports.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/willow-sports.png" alt="Willow Sports">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Willow Sports</h3>
+                    <p class="channel-description">Specialized cricket channel for viewers in North America.</p>
+                    <a href="./channel/willow-sports.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/A-sports.png" alt="A Sports">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">A Sports</h3>
+                    <p class="channel-description">Pakistani sports channel with exclusive cricket coverage.</p>
+                    <a href="./channel/a-sports.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            
+
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/willow-extra-sports.png" alt="Willow Extra">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Willow Extra</h3>
+                    <p class="channel-description">Additional cricket coverage and exclusive content.</p>
+                    <a href="./channel/willow-extra.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+            
+            <div class="channel-card">
+                <div class="channel-image-container">
+                    <img class="channel-image" src="./icons/ten-sports.png" alt="Ten Sports">
+                </div>
+                <div class="channel-info">
+                    <h3 class="channel-name">Ten Sports</h3>
+                    <p class="channel-description">International sports channel with diverse sporting events.</p>
+                    <a href="./channel/ten-sports.html" class="watch-btn">Watch Now</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">SportsTV Hub</div>
+            
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Channels</a>
+                <a href="#">Live Events</a>
+                <a href="#">Support</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <p class="copyright">© 2023 SLTV. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Simple fullscreen functionality for demonstration
+        function toggleFullscreen() {
+            const elem = document.getElementById('playerIframe');
+            
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
+        // For demonstration purposes - would be implemented in actual player pages
+        function disableAds() {
+            alert("Ads disabled for better streaming experience");
+            // Actual implementation would modify the iframe source to remove ads
+        }
+    </script>
+</body>
+</html>

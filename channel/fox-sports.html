@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/fox-cricket.png" type="image/x-icon">
+    <title>Fox Sports - Premium Sports Streaming</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="./style/styles.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <img src="../icons/cricket.png" alt="SLTV Logo">
+                <h1>SL<span>TV</span></h1>
+            </a>
+            
+            <div class="notification-bar">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>For better experience, use an ad blocker or click "Disable Ads" button</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Player Container -->
+    <main class="player-container">
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Channels
+        </a>
+        
+
+        
+        <div class="ad-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <strong>Ad Blocker Recommendation:</strong> For uninterrupted streaming and better experience, we recommend using an ad blocker or clicking the "Disable Ads" button below.
+            </div>
+        </div>
+        
+        <div class="video-container">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+            <iframe
+                src="//stream.crichd.sc/update/fox501.php"
+                marginheight="0"
+                marginwidth="0"
+                scrolling="no"
+                allowfullscreen
+                id="playerIframe"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                frameborder="0"
+            ></iframe>
+        </div>
+        
+        <div class="player-controls">
+            <button class="control-btn fullscreen-btn" onclick="toggleFullscreen()">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+            <button class="control-btn disable-ads-btn" onclick="disableAds()">
+                <i class="fas fa-ban"></i> Disable Ads
+            </button>
+            <select class="quality-selector" onchange="changeQuality(this.value)">
+                <option value="">Select Quality</option>
+                <option value="auto">Auto (Recommended)</option>
+                <option value="hd">HD Quality</option>
+                <option value="sd">SD Quality</option>
+                <option value="low">Low Quality</option>
+            </select>
+        </div>
+        
+        <div class="related-channels">
+            <h3 class="section-title">Other Sports Channels</h3>
+            <div class="channel-grid">
+                <a href="./t-sports.html" class="channel-card">
+                    <div class="channel-card-image">
+                        <img src="../icons/tsports.png" alt="T Sports">
+                    </div>
+                    <div class="channel-card-name">T Sports</div>
+                </a>
+                
+                <a href="./ptv.html" class="channel-card">
+                    <div class="channel-card-image">
+                        <img src="../icons/pvt-sports.png" alt="PTV Sports">
+                    </div>
+                    <div class="channel-card-name">PTV Sports</div>
+                </a>
+                
+                <a href="./star-sports-1.html" class="channel-card">
+                    <div class="channel-card-image">
+                        <img src="../icons/STAR Sports 1.png" alt="Star Sports 1">
+                    </div>
+                    <div class="channel-card-name">Star Sports 1</div>
+                </a>
+                
+                <a href="./ten-sports.html" class="channel-card">
+                    <div class="channel-card-image">
+                        <img src="../icons/ten-sports.png" alt="Ten Sports">
+                    </div>
+                    <div class="channel-card-name">Ten Sports</div>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">SportsTV Hub</div>
+            
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="www.sltvapp.techlasiya.com">Web</a>
+                <a href="https://t.me/sltvapp">Telegram</a>
+                <a href="www.techlasiya.com">Main Web</a>
+            </div>
+            
+            <p class="copyright">© 2023 SLTV. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Wait for the iframe to load
+        document.getElementById('playerIframe').addEventListener('load', function() {
+            document.querySelector('.loading').style.display = 'none';
+        });
+        
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const elem = document.getElementById('playerIframe');
+            
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
+        // Disable ads function
+        function disableAds() {
+            alert("Ads disabled for better streaming experience. For complete ad-free experience, we recommend using an ad blocker extension.");
+            // In a real implementation, this would modify the iframe source to remove ads
+        }
+        
+        // Quality selector function
+        function changeQuality(quality) {
+            if (quality) {
+                alert("Stream quality changed to " + quality.toUpperCase());
+                // In a real implementation, this would change the stream quality
+            }
+        }
+        
+        // Handle page visibility change to pause video when tab is not active
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('Tab is inactive - pausing video would occur here');
+            } else {
+                console.log('Tab is active');
+            }
+        });
+    </script>
+</body>
+</html>
