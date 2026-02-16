@@ -1,41 +1,43 @@
-<html lang="en"> 
- 
-<head> 
-  <meta charset="UTF-8"> 
-  <title>SLTV</title> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <script src="//content.jwplatform.com/libraries/SAHhwvZq.js"></script> 
-  <style> 
-    body { 
-      margin: 0px 
-    } 
- 
-    .jwplayer { 
-      position: absolute !important 
-    } 
- 
-    .jwplayer.jw-flag-aspect-mode { 
-      min-height: 100%; 
-      max-height: 100% 
-    } 
-  </style> 
-</head> 
- 
-<body> 
-  <div id="jwplayerDiv"></div> 
-  <script type="text/javascript"> 
-    jwplayer("jwplayerDiv").setup({ 
-      file: "https://edge3-moblive.yuppcdn.net/drm/smil:tencricketdrm.smil/manifest.mpd", position: 'bottom', 
-      "autostart": true, 
-      "stretching": "", 
-      "width": "100%", 
-      type: "dash", 
-      drm: { 
-        "clearkey": { 
-          "keyId": "9872e439f21f4a299cab249c6554daa3", 
-          "key": "0cdfcfe0d0f1fbe100554ce3ef4c4665" 
-        } 
-      } 
-    });     
-  </script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLTV – Live Channel Player</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/shaka-player.ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/controls.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- === PLAYER SECTION === -->
+        <div class="player-section">
+            <div class="video-wrapper" data-shaka-player-container>
+                <video data-shaka-player id="video" autoplay playsinline></video>
+
+                <!-- === WATERMARK (bottom-left, clickable) === -->
+                <div class="watermark">
+                    <a>
+                        <img src="https://raw.githubusercontent.com/nxt-owner/SLTV-APP/refs/heads/main/images/logo/logo.png"
+                            alt="Watermark Logo">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search channels..." autocomplete="off">
+            </div>
+        </div>
+
+        <!-- === CHANNEL GRID (populated by JS) === -->
+        <div class="channels-container" id="channelsContainer"></div>
+    </div>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
